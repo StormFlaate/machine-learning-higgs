@@ -1,0 +1,5 @@
+# Exluding the biggest .csv file that is over the strict limit for github (100 MB)
+/data/test.csv
+.DS_Store
+**/.DS_Store
+
