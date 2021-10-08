@@ -15,7 +15,15 @@ Class project 1 | ML Higgs | EPFL
 4. Add the test.csv file into the ```/data``` (folder named data, can't add it here since github has a 100MB strict file size limit)
 5. You are done for now!
 
+# Structure:
+**Folders:**
+```/data/```-> contains 2/3 data files
+```/latex-example-paper/```-> contains the latex example template and info
 
+**Files:**
+```/.gitignore```-> Includes all the files that git will ignore when pushing
+```/README.md```-> Contains the information you are reading right now
+```/project1_description.pdf```-> Includes the project 1 task description
 
 
 # Physics Background:
