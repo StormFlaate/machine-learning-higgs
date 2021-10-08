@@ -3,7 +3,7 @@ Class project 1 | ML Higgs | EPFL
 
 
 **Setup:**
-1. Copy this code to your clip-board: ```git clone https://github.com/StormFlaate/machine-learning-higgs.git```
+1. Copy this code to your clipboard: ```git clone https://github.com/StormFlaate/machine-learning-higgs.git```
 2. Open your terminal on your computer, find a nice place and copy this code in to clone the repo
 3. ```cd machine-learning-higgs```
 
