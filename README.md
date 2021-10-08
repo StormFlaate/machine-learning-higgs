@@ -9,5 +9,5 @@ Class project 1 | ML Higgs | EPFL
 
 4. Download the dataset files from https://www.aicrowd.com/challenges/epfl-machine-learning-higgs/dataset_files
 5. Unzip the files
-6. Add the test.csv file into the /data-folder
+6. Add the test.csv file into the ```/data``` (folder named data)
 7. Wey!! :)
