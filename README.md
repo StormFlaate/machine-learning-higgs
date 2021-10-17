@@ -16,9 +16,6 @@ Class project 1 | ML Higgs | EPFL<br/>
 5. You are done for now!<br/>
 
 # Structure:<br/>
-**Folders:**<br/>
-```/data/```-> contains 2/3 data files<br/>
-```/latex-example-paper/```-> contains the latex example template and info<br/>
 
 **Files:**<br/>
 ```/.gitignore```-> Includes all the files that git will ignore when pushing<br/>
