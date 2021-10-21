@@ -75,15 +75,6 @@ def batch_iter(y, tx, batch_size, num_batches=1, shuffle=True):
 
 
 # Helper functions for implementation.py ==========================================================
-def compute_stoch_gradient(y, tx, w):
-    N = y.shape[0] # Number of elements in vector y
-    error = y-(tx@w)
-    return -(1/N)*(tx.T)@error
-
-def compute_gradient(y, tx, w):
-    N = y.shape[0] # Number of elements in vector y
-    error = y-(tx@w)
-    return -(1/N)*(tx.T)@error
 
 def compute_loss(y, tx, w):
     N = y.shape[0] # Number of elements in vector y
@@ -129,7 +120,7 @@ def reguralized_logistic_regression_one_step(y, tx, w, gamma_, lambda_):
 
 # Own helper functions for implementation.py ==========================================================
 
-def mean_square_error(y, tx, w):
+def compute_mean_square_error(y, tx, w):
     """Calculate the mean square error.
     
     INPUT VARIABLES:
@@ -137,12 +128,36 @@ def mean_square_error(y, tx, w):
     - tx:    Input data (Matrix: NxD) 
     - w:     Weigths (Vector: Dx1)
     
+    LOCAL VARIABLES:
+    - N:     Number of datapoints
+    - e:     Error (Vector: Nx1)
+
     OUPUT VARIABLES:
     - mse:   Mean square error (Scalar)
-    
     """
     N = y.shape[0]
     # Loss by MSE (Mean Square Error)
     e =  y - tx@w
     mse = (1/(2*N))*e.T@e
     return mse 
+
+def compute_gradient(y, tx, w):
+    """Compute the gradient.
+    
+    INPUT VARIABLES:
+    - y:     Observed data (Vector: Nx1)
+    - tx:    Input data (Matrix: NxD) 
+    - w:     Weigths (Vector: Dx1)
+    
+    LOCAL VARIABLES:
+    - N:     Number of datapoints
+    - e:     Error (Vector: Nx1)
+
+    OUPUT VARIABLES:
+    - gradient:    Gradient (Vector: Dx1)
+    """
+    
+    N = y.shape[0]    
+    e = y-tx@w
+    gradient = -(1/N)*tx.T@e
+    return gradient
