@@ -1,19 +1,34 @@
 import numpy as np
 from numpy.core.fromnumeric import shape
-from proj1_helpers import batch_iter, compute_gradient, compute_stoch_gradient, compute_loss
+from proj1_helpers import batch_iter, compute_gradient, compute_stoch_gradient, compute_loss, mean_square_error
 from proj1_helpers import logistic_regression_gradient_descent_one_step, compute_gradient_log_likelihood
-from proj1_helpers import reguralized_logistic_regression_one_step
+from proj1_helpers import reguralized_logistic_regression_one_step, compute_mean_square_error
+
 
 def least_squares_GD(y, tx, initial_w, max_iters, gamma):
+    """Gradient descent algorithm using least squares.
+    
+    INPUT VARIABLES:
+    - y:           Observed data (Vector: Nx1)
+    - tx:          Input data (Matrix: NxD) 
+    - initial_w:   Initial weights (Vector: Dx1)
+    - max_iters:   Number of iterations we will run (Scalar/constant)
+    - gamma:       Stepsize for the stoch gradient descent (Scalar/constant)
+    
+    OUTPUT VARIABLES:
+    - loss:        Mean square error of weights w (Scalar)
+    - w:           Weights calculated (Vector: Dx1)
+    """
+
     w = initial_w
-    loss = compute_loss(y,tx,w)
     for n_iter in range(max_iters):
-        loss = compute_loss(y,tx,w)
+        # Computing both gradient and mse
         gradient = compute_gradient(y,tx,w)
         w = w - gamma*gradient
+    
+    loss = compute_mean_square_error(y,tx,w)
 
     return w, loss
-
 
 def least_squares_SGD(y, tx, initial_w, max_iters, gamma):
     batch_size = 1  # Change this maybe
