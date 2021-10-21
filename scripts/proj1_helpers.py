@@ -161,3 +161,20 @@ def compute_gradient(y, tx, w):
     e = y-tx@w
     gradient = -(1/N)*tx.T@e
     return gradient
+
+def compute_stoch_gradient(y, tx, w):
+    """Compute a stochastic gradient
+    
+    INPUT VARIABLES:
+    - y:           Observed data (Vector: Nx1)
+    - tx:          Input data (Matrix: NxD) 
+    - w:           Weights (Vector: Dx1)
+    
+    OUTPUT VARIABLES:
+    - gradient:    Gradient (Vector: Dx1)
+    """
+    # TODO: implement stochastic gradient computation.It's same as the gradient descent.
+    N = y.shape[0]    
+    e = y-tx@w
+    gradient = -(1/N)*tx.T@e
+    return gradient
