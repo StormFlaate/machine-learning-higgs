@@ -81,7 +81,7 @@ def logistic_regression(y, tx, initial_w, max_iters, gamma):
     INPUT VARIABLES:
     - y:           Observed data (Vector: Nx1)
     - tx:          Input data (Matrix: NxD) 
-    - w:           Weights (Vector: Dx1)
+    - initial_w:   Initial weights (Vector: Dx1)
     - max_iters:   Number of steps/iterations we will do with the gradient descent
     - gamma:       Step size for the stoch gradient descent (Scalar/constant)
     
@@ -102,7 +102,7 @@ def logistic_regression_SGD(y, tx, initial_w, batch_size, max_iters, gamma):
     INPUT VARIABLES:
     - y:           Observed data (Vector: Nx1)
     - tx:          Input data (Matrix: NxD) 
-    - w:           Weights (Vector: Dx1)
+    - initial_w:   Initial weights (Vector: Dx1)
     - batch_size:  Number of elements that will be used per iteration for the stoch gradient descent
     - max_iters:   Number of steps/iterations we will do with the stoch gradient descent
     - gamma:       Step size for the stoch gradient descent (Scalar/constant)
@@ -119,6 +119,21 @@ def logistic_regression_SGD(y, tx, initial_w, batch_size, max_iters, gamma):
     return w, loss
 
 def reguralized_logistic_regression(y, tx, lambda_, initial_w, max_iters, gamma):
+    """Reguralized logistic regression using gradient descent
+    
+    INPUT VARIABLES:
+    - y:           Observed data (Vector: Nx1)
+    - tx:          Input data (Matrix: NxD) 
+    - lambda_:     Regularization parameter
+    - initial_w:   Initial weights (Vector: Dx1)
+    - max_iters:   Number of steps/iterations we will do with the stoch gradient descent
+    - gamma:       Step size for the stoch gradient descent (Scalar/constant)
+    
+    
+    OUTPUT VARIABLES:
+    - loss:        Mean square error of weights w (Scalar)
+    - w:           Weights calculated (Vector: Dx1)
+    """
     w = initial_w # Setting the weight to the initial weight
 
     for i in range(max_iters):
