@@ -76,10 +76,6 @@ def batch_iter(y, tx, batch_size, num_batches=1, shuffle=True):
 
 # Helper functions for implementation.py ==========================================================
 
-def compute_loss(y, tx, w):
-    N = y.shape[0] # Number of elements in vector y
-    error = y-(tx@w)
-    return (1/(2*N))*(error.T@error)
 
 def logistic_regression_gradient_descent_one_step(y, tx, w, gamma_):
     loss = compute_loss_log_likelihood(y, tx, w)

@@ -73,7 +73,7 @@ def least_squares(y, tx):
     - loss:        Mean square error of weights w (Scalar)
     - w:           Weights calculated (Vector: Dx1)
     """
-    w = np.linalg.lstsq(tx,y)[0]
+    w = np.linalg.lstsq(tx,y,rcond=None)[0]
     loss = compute_mean_square_error(y, tx,w)
     return w, loss
 
