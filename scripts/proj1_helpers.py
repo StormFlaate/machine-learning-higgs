@@ -74,7 +74,7 @@ def batch_iter(y, tx, batch_size, num_batches=1, shuffle=True):
 
 
 
-# Hellper functions for implementation.py ==========================================================
+# Helper functions for implementation.py ==========================================================
 def compute_stoch_gradient(y, tx, w):
     N = y.shape[0] # Number of elements in vector y
     error = y-(tx@w)
@@ -94,7 +94,7 @@ def logistic_regression_gradient_descent_one_step(y, tx, w, gamma_):
     loss = compute_loss_log_likelihood(y, tx, w)
     gradient = compute_gradient_log_likelihood(y, tx, w)
     w = w - gamma_ * gradient
-    return loss, w
+    return w, loss
 
 def sigmoid_function(a):
     sig = 1/(1+np.exp(-a)) #Using np.exp instead of math.exp for speed
@@ -105,7 +105,14 @@ def compute_loss_log_likelihood(y, tx, w):
     first_term = -y.T@np.log(y_)
     second_term = -(1-y).T@np.log(1-y_)
     loss =  first_term + second_term
+    print(loss)
     return np.squeeze(loss)
+
+def compute_loss_log_likelihood(y, tx, w):
+    
+    """compute the loss: negative log likelihood for binary classification problem"""
+    return -np.sum(y*np.log(sigmoid_function(tx.T*w)))-sum((1-y)*np.log(1-sigmoid_function(tx.T*w)))
+
 
 def compute_gradient_log_likelihood(y, tx, w):
     error = sigmoid_function(tx@w) - y
@@ -116,5 +123,26 @@ def reguralized_logistic_regression_one_step(y, tx, w, gamma_, lambda_):
     loss = init_loss+lambda_*(w.T@w) # Adding the regularization
     gradient = compute_gradient_log_likelihood(y, tx, w) + 2*w*lambda_
     w = w - gamma_*gradient
-    return loss, w
+    return w, loss
 # ============================================================================
+
+
+# Own helper functions for implementation.py ==========================================================
+
+def mean_square_error(y, tx, w):
+    """Calculate the mean square error.
+    
+    INPUT VARIABLES:
+    - y:     Observed data (Vector: Nx1)
+    - tx:    Input data (Matrix: NxD) 
+    - w:     Weigths (Vector: Dx1)
+    
+    OUPUT VARIABLES:
+    - mse:   Mean square error (Scalar)
+    
+    """
+    N = y.shape[0]
+    # Loss by MSE (Mean Square Error)
+    e =  y - tx@w
+    mse = (1/(2*N))*e.T@e
+    return mse 
