@@ -123,6 +123,6 @@ def reguralized_logistic_regression(y, tx, lambda_, initial_w, max_iters, gamma)
 
     for i in range(max_iters):
         # Loops max_iters number of times, getting last loss and last w each time
-        w, loss = reguralized_logistic_regression_one_step(y, tx, w, gamma, lambda_)
+        w, loss = penalized_logistic_regression_gradient_descent_one_step(y, tx, w, gamma, lambda_)
     return w, loss
 
