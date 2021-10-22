@@ -244,6 +244,7 @@ def penalized_logistic_regression_gradient_descent_one_step(y, tx, w, gamma, lam
     - tx:          Input data (Matrix: NxD) 
     - w:           Weights (Vector: Dx1)
     - gamma:       Step size for the stoch gradient descent (Scalar/constant)
+    - lambda_:     Regularization parameter
     
     OUTPUT VARIABLES:
     - loss:        Mean square error of weights w (Scalar)
