@@ -90,7 +90,6 @@ def logistic_regression(y, tx, initial_w, max_iters, gamma):
     - w:           Weights calculated (Vector: Dx1)
     """
     w = initial_w # Setting the weight to the initial weight
-
     for i in range(max_iters):
         # Loops max_iters number of times, getting last loss and last w each time
         w, loss = logistic_regression_gradient_descent_one_step(y, tx, w, gamma)
