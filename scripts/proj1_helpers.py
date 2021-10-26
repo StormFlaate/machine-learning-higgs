@@ -163,14 +163,11 @@ def compute_negative_log_likelihood_loss(y, tx, w):
     - w:           Weights (Vector: Dx1)
     
     OUTPUT VARIABLES:
-    - gradient:    Gradient (Vector: Dx1)
+    - loss:        Loss for given w
+    
     """
-
-    N = y.shape[0]
-    tot_sum = 0
-    for i, y_i in enumerate(y):
-        tot_sum += np.log(1+np.exp(tx[i].T@w)) - y_i*tx[i].T@w
-    return np.sum(tot_sum)
+    loss = np.sum( np.log(np.exp(tx@w) + 1)- y*(tx@w) )
+    return loss
 
 
 def compute_negative_log_likelihood_gradient(y, tx, w):
@@ -198,7 +195,7 @@ def logistic_regression_gradient_descent_one_step(y, tx, w, gamma):
     - gamma:       Step size for the stoch gradient descent (Scalar/constant)
     
     OUTPUT VARIABLES:
-    - loss:        Mean square error of weights w (Scalar)
+    - loss:        Loss for given w (Scalar)
     - w:           Weights calculated (Vector: Dx1)
     """
 
