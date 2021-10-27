@@ -1,5 +1,4 @@
 import numpy as np
-from numpy.core.fromnumeric import shape
 from proj1_helpers import *
 
 def least_squares_GD(y, tx, initial_w, max_iters, gamma):
@@ -92,30 +91,13 @@ def logistic_regression(y, tx, initial_w, max_iters, gamma):
     w = initial_w # Setting the weight to the initial weight
     for i in range(max_iters):
         # Loops max_iters number of times, getting last loss and last w each time
-        w, loss = logistic_regression_gradient_descent_one_step(y, tx, w, gamma)
+        gradient = tx.T@(sigmoid(tx@w)-y)
+    
+        # Updating the w
+        w = w - gamma*gradient
+    loss = compute_negative_log_likelihood_loss(y, tx, w)
     return w, loss
 
-def logistic_regression_SGD(y, tx, initial_w, batch_size, max_iters, gamma):
-    """Logistic regression using gradient descent
-    
-    INPUT VARIABLES:
-    - y:           Observed data (Vector: Nx1)
-    - tx:          Input data (Matrix: NxD) 
-    - initial_w:   Initial weights (Vector: Dx1)
-    - batch_size:  Number of elements that will be used per iteration for the stoch gradient descent
-    - max_iters:   Number of steps/iterations we will do with the stoch gradient descent
-    - gamma:       Step size for the stoch gradient descent (Scalar/constant)
-    
-    OUTPUT VARIABLES:
-    - loss:        Mean square error of weights w (Scalar)
-    - w:           Weights calculated (Vector: Dx1)
-    """
-    w = initial_w # Setting the weight to the initial weight
-
-    for i in range(max_iters):
-        # Loops max_iters number of times, getting last loss and last w each time
-        w, loss = logistic_regression_stoch_gradient_descent_one_step(y, tx, w, batch_size, gamma)
-    return w, loss
 
 def reguralized_logistic_regression(y, tx, lambda_, initial_w, max_iters, gamma):
     """Reguralized logistic regression using gradient descent
@@ -140,3 +122,31 @@ def reguralized_logistic_regression(y, tx, lambda_, initial_w, max_iters, gamma)
         w, loss = penalized_logistic_regression_gradient_descent_one_step(y, tx, w, gamma, lambda_)
     return w, loss
 
+
+
+
+# ===========================================================
+# DONT NEED =================================================
+# ===========================================================
+
+def logistic_regression_SGD(y, tx, initial_w, batch_size, max_iters, gamma):
+    """Logistic regression using gradient descent
+    
+    INPUT VARIABLES:
+    - y:           Observed data (Vector: Nx1)
+    - tx:          Input data (Matrix: NxD) 
+    - initial_w:   Initial weights (Vector: Dx1)
+    - batch_size:  Number of elements that will be used per iteration for the stoch gradient descent
+    - max_iters:   Number of steps/iterations we will do with the stoch gradient descent
+    - gamma:       Step size for the stoch gradient descent (Scalar/constant)
+    
+    OUTPUT VARIABLES:
+    - loss:        Mean square error of weights w (Scalar)
+    - w:           Weights calculated (Vector: Dx1)
+    """
+    w = initial_w # Setting the weight to the initial weight
+
+    for i in range(max_iters):
+        # Loops max_iters number of times, getting last loss and last w each time
+        w, loss = logistic_regression_stoch_gradient_descent_one_step(y, tx, w, batch_size, gamma)
+    return w, loss

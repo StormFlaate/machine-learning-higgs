@@ -214,28 +214,6 @@ def logistic_regression_gradient_descent_one_step(y, tx, w, gamma):
     return w
 
 
-def logistic_regression_stoch_gradient_descent_one_step(y, tx, w, batch_size, gamma):
-    """Do one step of logistic regression with stoch gradient descent
-    
-    INPUT VARIABLES:
-    - y:           Observed data (Vector: Nx1)
-    - tx:          Input data (Matrix: NxD) 
-    - w:           Weights (Vector: Dx1)
-    - batch_size:  Number of elements that will be used per iteration for the stoch gradient descent
-    - gamma:       Step size for the stoch gradient descent (Scalar/constant)
-    
-    OUTPUT VARIABLES:
-    - loss:        Mean square error of weights w (Scalar)
-    - w:           Weights calculated (Vector: Dx1)
-    """
-
-    for y_n, tx_n in batch_iter(y,tx, batch_size):
-        gradient = compute_negative_log_likelihood_gradient(y_n,tx_n,w)
-        # Updating the w
-        w = w - gamma*gradient
-    
-
-    return w
 
 
 def penalized_logistic_regression_gradient_descent_one_step(y, tx, w, gamma, lambda_):
@@ -260,3 +238,37 @@ def penalized_logistic_regression_gradient_descent_one_step(y, tx, w, gamma, lam
     w = w - gamma*gradient
     
     return w, loss
+
+
+
+
+
+
+
+
+# ===========================================================
+# DONT NEED =================================================
+# ===========================================================
+
+def logistic_regression_stoch_gradient_descent_one_step(y, tx, w, batch_size, gamma):
+    """Do one step of logistic regression with stoch gradient descent
+    
+    INPUT VARIABLES:
+    - y:           Observed data (Vector: Nx1)
+    - tx:          Input data (Matrix: NxD) 
+    - w:           Weights (Vector: Dx1)
+    - batch_size:  Number of elements that will be used per iteration for the stoch gradient descent
+    - gamma:       Step size for the stoch gradient descent (Scalar/constant)
+    
+    OUTPUT VARIABLES:
+    - loss:        Mean square error of weights w (Scalar)
+    - w:           Weights calculated (Vector: Dx1)
+    """
+
+    for y_n, tx_n in batch_iter(y,tx, batch_size):
+        gradient = compute_negative_log_likelihood_gradient(y_n,tx_n,w)
+        # Updating the w
+        w = w - gamma*gradient
+    
+
+    return w
