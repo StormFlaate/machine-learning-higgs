@@ -87,9 +87,10 @@ def sigmoid(t):
     OUTPUT VARIABLES:
     - sigmoid:  The value of sigmoid function given variable t
     """
+    return np.where(t >= 0, 1 / (1 + np.exp(-t)), np.exp(t) / (1 + np.exp(t)))
 
-    sigmoid = 1/(1+np.exp(-t))
-    return sigmoid
+    #sigmoid = 1.0/(1.0 + np.exp(-t))
+    #return sigmoid
 
 
 def compute_mean_square_error(y, tx, w):
@@ -163,12 +164,17 @@ def compute_negative_log_likelihood_loss(y, tx, w):
     - w:           Weights (Vector: Dx1)
     
     OUTPUT VARIABLES:
-    - loss:        Loss for given w
+    - loss:        Loss for given w (Scalar)
     
     """
-    loss = np.sum( np.log(np.exp(tx@w) + 1)- y*(tx@w) )
-    return loss
+    total_loss = 0
+    
+    for i, y_i in enumerate(y):
+        exp_term = np.exp( ((tx[i].T)@w))
+        total_loss += np.log(exp_term + 1) - y_i*(tx[i].T@w)
 
+    return total_loss
+    
 
 def compute_negative_log_likelihood_gradient(y, tx, w):
     """Compute a negative log likelihood gradient
@@ -181,6 +187,7 @@ def compute_negative_log_likelihood_gradient(y, tx, w):
     OUTPUT VARIABLES:
     - gradient:    Gradient (Vector: Dx1)
     """
+    
     gradient = tx.T@(sigmoid(tx@w)-y)
     return gradient
 
@@ -199,13 +206,12 @@ def logistic_regression_gradient_descent_one_step(y, tx, w, gamma):
     - w:           Weights calculated (Vector: Dx1)
     """
 
-    loss = compute_negative_log_likelihood_loss(y,tx,w)
     gradient = compute_negative_log_likelihood_gradient(y,tx,w)
     
     # Updating the w
     w = w - gamma*gradient
     
-    return w, loss
+    return w
 
 
 def logistic_regression_stoch_gradient_descent_one_step(y, tx, w, batch_size, gamma):
@@ -228,9 +234,8 @@ def logistic_regression_stoch_gradient_descent_one_step(y, tx, w, batch_size, ga
         # Updating the w
         w = w - gamma*gradient
     
-    loss = compute_negative_log_likelihood_loss(y,tx,w)
 
-    return w, loss
+    return w
 
 
 def penalized_logistic_regression_gradient_descent_one_step(y, tx, w, gamma, lambda_):
