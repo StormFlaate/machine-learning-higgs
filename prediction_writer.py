@@ -26,4 +26,6 @@ def prediction_writer(TEST_DATA_PATH, WEIGHTS_PATH, DATA_SAVE_PATH):
 
     print(len(y_good_guess))
 
-prediction_writer("data/clean_test_data.csv", "data/weights/least_squares_weights.csv", "data/predictions/least_squares_predictions.csv")
+#prediction_writer("data/clean_test_data.csv", "data/weights/least_squares_weights.csv", "data/predictions/least_squares_predictions.csv")
+#prediction_writer("data/clean_test_data.csv", "data/weights/ridge_regression.csv", "data/predictions/ridge_regression.csv")
+prediction_writer("data/clean_test_data.csv", "data/weights/least_squares_GD_weights.csv", "data/predictions/least_squares_GD.csv")

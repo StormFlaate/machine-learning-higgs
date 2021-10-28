@@ -116,7 +116,7 @@ def cross_validation(y, x, k_fold, method, *args):
         x_train, y_train, x_test, y_test = split_data(x, y, k_indices, k)
     
         # Compute the weights using the specified method and any related args
-        w = method(y_train, x_train, *args)
+        w, _ = method(y_train, x_train, *args)
         
         # Compute the errors and append them to the respective lists
         tr_mse_lst.append(compute_mse(y_train, x_train, w))

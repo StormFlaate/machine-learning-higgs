@@ -105,9 +105,10 @@ def compute_mean_square_error(y, tx, w):
     OUPUT VARIABLES:
     - mse:   Mean square error (Scalar)
     """
-    N = y.shape[0]
+    y = np.reshape(y,(len(y),1))
+    N = len(y)
     # Loss by MSE (Mean Square Error)
-    e =  y - tx@w
+    e = y - tx@w
     mse = (1/(2*N))*e.T@e
     return mse
 
@@ -126,8 +127,8 @@ def compute_least_squares_gradient(y, tx, w):
     OUPUT VARIABLES:
     - gradient:    Gradient (Vector: Dx1)
     """
-
-    N = y.shape[0]
+    y = np.reshape(y, (len(y), 1))
+    N = len(y)
     e = y-tx@w
     gradient = -(1/N)*tx.T@e
     return gradient
@@ -145,6 +146,7 @@ def compute_least_squares_stoch_gradient(y, tx, w):
     - gradient:    Gradient (Vector: Dx1)
     """
     # TODO: implement stochastic gradient computation.It's same as the gradient descent.
+    y = np.reshape(y, (len(y), 1))
     N = y.shape[0]
     e = y-tx@w
     gradient = -(1/N)*tx.T@e
@@ -163,7 +165,7 @@ def compute_negative_log_likelihood_loss(y, tx, w):
     - loss:        Loss for given w
 
     """
-    loss = np.sum(np.log(np.exp(tx @ w) + 1) - (tx @ w) @ y)
+    loss = np.sum(np.log(np.exp(tx @ w) + 1) - y * (tx @ w))
     return loss
 
 
@@ -178,6 +180,7 @@ def compute_negative_log_likelihood_gradient(y, tx, w):
     OUTPUT VARIABLES:
     - gradient:    Gradient (Vector: Dx1)
     """
+
     gradient = tx.T@(sigmoid(tx@w)-y)
     return gradient
 
@@ -196,38 +199,14 @@ def logistic_regression_gradient_descent_one_step(y, tx, w, gamma):
     - w:           Weights calculated (Vector: Dx1)
     """
 
-    loss = compute_negative_log_likelihood_loss(y,tx,w)
     gradient = compute_negative_log_likelihood_gradient(y,tx,w)
 
     # Updating the w
     w = w - gamma*gradient
 
-    return w, loss
+    return w
 
 
-def logistic_regression_stoch_gradient_descent_one_step(y, tx, w, batch_size, gamma):
-    """Do one step of logistic regression with stoch gradient descent
-
-    INPUT VARIABLES:
-    - y:           Observed data (Vector: Nx1)
-    - tx:          Input data (Matrix: NxD)
-    - w:           Weights (Vector: Dx1)
-    - batch_size:  Number of elements that will be used per iteration for the stoch gradient descent
-    - gamma:       Step size for the stoch gradient descent (Scalar/constant)
-
-    OUTPUT VARIABLES:
-    - loss:        Mean square error of weights w (Scalar)
-    - w:           Weights calculated (Vector: Dx1)
-    """
-
-    for y_n, tx_n in batch_iter(y,tx, batch_size):
-        gradient = compute_negative_log_likelihood_gradient(y_n,tx_n,w)
-        # Updating the w
-        w = w - gamma*gradient
-
-    loss = compute_negative_log_likelihood_loss(y,tx,w)
-
-    return w, loss
 
 
 def penalized_logistic_regression_gradient_descent_one_step(y, tx, w, gamma, lambda_):

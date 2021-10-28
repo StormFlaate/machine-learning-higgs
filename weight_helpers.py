@@ -1,28 +1,14 @@
 import numpy as np
+from proj1_helpers import compute_mean_square_error
 
 #--------------- Writing Weights -----------------#
 def weight_writer(w, DATA_SAVE_PATH):
+    w = np.reshape(w, (1, len(w)))[0]
     with open(DATA_SAVE_PATH, 'w') as f:
         f.write(str(w[0]))
         for weight in w[1:]:
             f.write("," + str(weight))
-
-#--------------- Finding the MSE -----------------#
-def compute_mse(y, tx, w):
-    """Compute the MSE for given data and weights
-
-    INPUT VARIABLES:
-    - x                     Array of features
-    - w                     Model weights for which the loss is to be calculated. Must have as many entries as x has columns
-    - y                     1D array of data points. Must have as many rows as x
-
-    OUTPUT VARIABLES:
-    - mse                   The mean squared error (float)
-    """
-
-    e = y - tx.dot(w)
-    mse = e.dot(e) / (len(e))
-    return mse
+    print("file_written")
 
 
 #--------------- Building the k indices for cross validation -----------------#
@@ -100,11 +86,11 @@ def cross_validation(y, x, k_fold, method, *args):
         x_train, y_train, x_test, y_test = split_data(x, y, k_indices, k)
 
         # Compute the weights using the specified method and any related args
-        w = method(y_train, x_train, *args)
+        w, _ = method(y_train, x_train, *args)
 
         # Compute the errors and append them to the respective lists
-        #tr_mse_lst.append(compute_mse(y_train, x_train, w))
-        te_mse_lst.append(compute_mse(y_test, x_test, w))
+        #tr_mse_lst.append(compute_mean_square_error(y_train, x_train, w))
+        te_mse_lst.append(compute_mean_square_error(y_test, x_test, w))
 
     # Finally take the averages over the collected lists
 

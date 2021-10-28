@@ -61,7 +61,7 @@ def data_maker(DATA_PATH, DATA_SAVE_PATH, verbose=False, length=None):
 
     # Regressing the column corresponding to DER_mass_vis and the one corresponding to DER_mass_MMC
     a = np.hstack((np.ones((len(data_no999),1)), np.reshape(data_no999[:,4], (len(data_no999),1))))
-    b = data_no999[:,0]
+    b = data_no999[:,2]
     weights = np.linalg.lstsq(a, b)[0]
 
     # Finding -999 values in the first column (only column left with faulty values) and replacing them with regressed values
